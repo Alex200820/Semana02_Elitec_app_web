@@ -6,29 +6,29 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import entity.Libro;
+import entity.Plato;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.LibroModel;
+import model.PlatoModel;
 
-@WebServlet("/listaLibroPorTitulo")
-public class ListaLibroPorTituloServlet extends HttpServlet {
+@WebServlet("/listaPlatoPorNombre")
+public class ListaPlatoPorNombreServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;	
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//1 Recibir el parametro del titulo
-		String titulo = req.getParameter("titulo");
+		//1 Recibir el parametro del nombre
+		String nombre = req.getParameter("nombre");
 		
-		//2 Crear un objeto LibroModel
-		LibroModel model = new LibroModel();
-		List<Libro> lista = model.listaLibroPorTitulo(titulo);
+		//2 Crear un objeto PlatoModel
+		PlatoModel model = new PlatoModel();
+		List<Plato> lista = model.listaPlatoPorNombre(nombre);
 		
-		//3 Enviar la lista de libros al cliente en JSON
+		//3 Enviar la lista de platos al cliente en JSON
 		resp.setContentType("application/json");
 		
 		//4 Construir el JSON mmediante Gson modo pretty print
@@ -44,7 +44,5 @@ public class ListaLibroPorTituloServlet extends HttpServlet {
 		
 	}
 
-
-	
 	
 }
