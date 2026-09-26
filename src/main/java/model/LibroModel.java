@@ -6,12 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import entity.Plato;
+import entity.Libro;
 import util.MySqlDBConexion;
 
-public class PlatoModel {
+public class LibroModel {
 
-	public int insertaPlato(Plato obj) {
+	public int insertaLibro(Libro obj) {
 		int salida = -1;
 		Connection cn = null;
 		PreparedStatement ps = null;
@@ -20,18 +20,15 @@ public class PlatoModel {
 			cn = MySqlDBConexion.getConexion();
 			
 			//2 Crear el SQL de insercion
-			String sql = "INSERT INTO plato (nombre, proteinaPlato, categoria, tiempoPreparacion, disponibilidad, popularidad, precio) VALUES (?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO libro (registro, titulo, pais, autor, fechaCreacion) VALUES (?,?,?,?,?)";
 			
 			//3 Crear el PreparedStatement
 			ps = cn.prepareStatement(sql);
-			ps.setString(1, obj.getNombre());
-			ps.setString(2, obj.getProteinaPlato());
-			ps.setString(3, obj.getCategoria());
-			ps.setInt(4, obj.getTiempoPreparacion());
-			ps.setString(5, obj.getDisponibilidad());
-			ps.setString(6, obj.getPopularidad());
-			ps.setDouble(7, obj.getPrecio());
-			
+			ps.setString(1, obj.getRegistro());
+			ps.setString(2, obj.getTitulo());
+			ps.setString(3, obj.getPais());
+			ps.setString(4, obj.getAutor());
+			ps.setDate(5, java.sql.Date.valueOf(obj.getFechaCreacion()));
 			
 			System.out.println("SQL: " + ps);
 			
@@ -54,8 +51,8 @@ public class PlatoModel {
 		return salida;
 	}
 	
-	public List<Plato> listaPlatoPorNombre (String nombre){
-		ArrayList<Plato> salida = new ArrayList<Plato>();
+	public List<Libro> listaLibroPorTitulo (String titulo){
+		ArrayList<Libro> salida = new ArrayList<Libro>();
 		
 		Connection conn = null;
 		PreparedStatement pstm = null;
@@ -65,23 +62,21 @@ public class PlatoModel {
 			conn = MySqlDBConexion.getConexion();
 			
 			//2 se prepara la sentencia SQL
-			String sql = "SELECT * FROM plato WHERE nombre LIKE ?";
+			String sql = "SELECT * FROM libro WHERE titulo LIKE ?";
 			pstm = conn.prepareStatement(sql);
-			pstm.setString(1, "%" + nombre + "%");
+			pstm.setString(1, "%" + titulo + "%");
 			
 			//3 se ejecuta la consulta
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				Plato obj = new Plato();
-				obj.setIdPlato(rs.getInt("idPlato"));
-				obj.setNombre(rs.getString("nombre"));
-				obj.setProteinaPlato(rs.getString("proteinaPlato"));
-				obj.setCategoria(rs.getString("categoria"));
-				obj.setTiempoPreparacion(rs.getInt("tiempoPreparacion"));
-				obj.setDisponibilidad(rs.getString("disponibilidad"));
-				obj.setPopularidad(rs.getString("popularidad"));
-				obj.setPrecio(rs.getDouble("precio"));
+				Libro obj = new Libro();
+				obj.setIdLibro(rs.getInt("idLibro"));
+				obj.setRegistro(rs.getString("registro"));
+				obj.setTitulo(rs.getString("titulo"));
+				obj.setPais(rs.getString("pais"));
+				obj.setAutor(rs.getString("autor"));
+				obj.setFechaCreacion(rs.getDate("fechaCreacion").toLocalDate());
 
 				salida.add(obj);
 			}
