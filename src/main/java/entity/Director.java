@@ -11,4 +11,5 @@ public class Director {
 	private String nombre;
 	private String email;
 	private Tipo tipo;
+	private int estado;
 }
