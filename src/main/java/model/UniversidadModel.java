@@ -18,13 +18,14 @@ public class UniversidadModel {
 		PreparedStatement pstm = null;
 		try {
 			conn = MySqlDBConexion.getConexion();
-			String sql = "insert into universidad(nombre, siglas, direccion, estado, idPais) values (?,?,?,?,?)";
+			String sql = "insert into universidad(nombre, siglas, direccion, estado, idPais, tipoGestion) values (?,?,?,?,?,?)";
 			pstm = conn.prepareStatement(sql);
 			pstm.setString(1, universidad.getNombre());
 			pstm.setString(2, universidad.getSiglas());
 			pstm.setString(3, universidad.getDireccion());
 			pstm.setInt(4, universidad.getEstado());
 			pstm.setInt(5, universidad.getPais().getIdPais());
+			pstm.setString(6, universidad.getTipoGestion());
 			salida = pstm.executeUpdate();
 			System.out.println("SQL ==> " + pstm);
 		} catch (Exception e) {
@@ -51,7 +52,7 @@ public class UniversidadModel {
 		
 		try {
 			conn = MySqlDBConexion.getConexion();
-			String sql = "select u.idUniversidad, u.nombre, u.siglas, u.direccion, u.estado, p.idPais, p.iso, p.nombre from universidad u inner join pais p on u.idPais = p.idPais where u.nombre like ?";
+			String sql = "select u.idUniversidad, u.nombre, u.siglas, u.direccion, u.estado, u.tipoGestion, p.idPais, p.iso, p.nombre from universidad u inner join pais p on u.idPais = p.idPais where u.nombre like ?";
 			pstm = conn.prepareStatement(sql);
 			pstm.setString(1, "%" + nombre + "%");
 			System.out.println("SQL ==> " + pstm);
@@ -65,11 +66,12 @@ public class UniversidadModel {
 				universidad.setSiglas(rs.getString(3));
 				universidad.setDireccion(rs.getString(4));
 				universidad.setEstado(rs.getInt(5));
+				universidad.setTipoGestion(rs.getString(6));
 				
 				pais = new Pais();
-				pais.setIdPais(rs.getInt(6));
-				pais.setIso(rs.getString(7));
-				pais.setNombre(rs.getString(8));
+				pais.setIdPais(rs.getInt(7));
+				pais.setIso(rs.getString(8));
+				pais.setNombre(rs.getString(9));
 				
 				universidad.setPais(pais);
 				salida.add(universidad);
@@ -98,14 +100,15 @@ public class UniversidadModel {
 		PreparedStatement pstm = null;
 		try {
 			conn = MySqlDBConexion.getConexion();
-			String sql = "update universidad set nombre=?, siglas=?, direccion=?, estado=?, idPais=? where idUniversidad=?";
+			String sql = "update universidad set nombre=?, siglas=?, direccion=?, estado=?, idPais=?, tipoGestion=? where idUniversidad=?";
 			pstm = conn.prepareStatement(sql);
 			pstm.setString(1, universidad.getNombre());
 			pstm.setString(2, universidad.getSiglas());
 			pstm.setString(3, universidad.getDireccion());
 			pstm.setInt(4, universidad.getEstado());
 			pstm.setInt(5, universidad.getPais().getIdPais());
-			pstm.setInt(6, universidad.getIdUniversidad());
+			pstm.setString(6, universidad.getTipoGestion());
+			pstm.setInt(7, universidad.getIdUniversidad());
 			System.out.println("SQL ==> " + pstm);
 			salida = pstm.executeUpdate();
 		} catch (Exception e) {
@@ -158,7 +161,7 @@ public class UniversidadModel {
 		ResultSet rs = null;
 		try {
 			conn = MySqlDBConexion.getConexion();
-			String sql = "select u.idUniversidad, u.nombre, u.siglas, u.direccion, u.estado, p.idPais, p.iso, p.nombre from universidad u inner join pais p on u.idPais = p.idPais where u.idUniversidad=?";
+			String sql = "select u.idUniversidad, u.nombre, u.siglas, u.direccion, u.estado, u.tipoGestion, p.idPais, p.iso, p.nombre from universidad u inner join pais p on u.idPais = p.idPais where u.idUniversidad=?";
 			pstm = conn.prepareStatement(sql);
 			pstm.setInt(1, idUniversidad);
 			System.out.println("SQL ==> " + pstm);
@@ -171,11 +174,12 @@ public class UniversidadModel {
 				universidad.setSiglas(rs.getString(3));
 				universidad.setDireccion(rs.getString(4));
 				universidad.setEstado(rs.getInt(5));
+				universidad.setTipoGestion(rs.getString(6));
 				
 				pais = new Pais();
-				pais.setIdPais(rs.getInt(6));
-				pais.setIso(rs.getString(7));
-				pais.setNombre(rs.getString(8));
+				pais.setIdPais(rs.getInt(7));
+				pais.setIso(rs.getString(8));
+				pais.setNombre(rs.getString(9));
 				
 				universidad.setPais(pais);
 			}
@@ -204,7 +208,7 @@ public class UniversidadModel {
 		
 		try {
 			conn = MySqlDBConexion.getConexion();
-			String sql = "select u.idUniversidad, u.nombre, u.siglas, u.direccion, u.estado, p.idPais, p.iso, p.nombre from universidad u inner join pais p on u.idPais = p.idPais";
+			String sql = "select u.idUniversidad, u.nombre, u.siglas, u.direccion, u.estado, u.tipoGestion, p.idPais, p.iso, p.nombre from universidad u inner join pais p on u.idPais = p.idPais";
 			pstm = conn.prepareStatement(sql);
 			System.out.println("SQL ==> " + pstm);
 			rs = pstm.executeQuery();
@@ -217,11 +221,12 @@ public class UniversidadModel {
 				universidad.setSiglas(rs.getString(3));
 				universidad.setDireccion(rs.getString(4));
 				universidad.setEstado(rs.getInt(5));
+				universidad.setTipoGestion(rs.getString(6));
 				
 				pais = new Pais();
-				pais.setIdPais(rs.getInt(6));
-				pais.setIso(rs.getString(7));
-				pais.setNombre(rs.getString(8));
+				pais.setIdPais(rs.getInt(7));
+				pais.setIso(rs.getString(8));
+				pais.setNombre(rs.getString(9));
 				
 				universidad.setPais(pais);
 				salida.add(universidad);
@@ -243,4 +248,3 @@ public class UniversidadModel {
 		return salida;
 	}
 }
-	
