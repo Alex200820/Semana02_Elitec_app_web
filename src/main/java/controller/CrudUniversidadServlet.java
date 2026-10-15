@@ -58,6 +58,7 @@ public class CrudUniversidadServlet extends HttpServlet {
 		String nombre = req.getParameter("nombre");
 		String siglas = req.getParameter("siglas");
 		String direccion = req.getParameter("direccion");
+		String tipoGestion = req.getParameter("tipoGestion");
 		String idPais = req.getParameter("idPais");
 		
 		// 2. Crear un objeto Pais y Universidad
@@ -68,6 +69,7 @@ public class CrudUniversidadServlet extends HttpServlet {
 		objUniversidad.setNombre(nombre);
 		objUniversidad.setSiglas(siglas);
 		objUniversidad.setDireccion(direccion);
+		objUniversidad.setTipoGestion(tipoGestion);
 		objUniversidad.setEstado(1); // 1 = activo, 0 = inactivo	
 		objUniversidad.setPais(objPais);
 		
@@ -92,6 +94,7 @@ public class CrudUniversidadServlet extends HttpServlet {
 		String nombre = req.getParameter("nombre");
 		String siglas = req.getParameter("siglas");
 		String direccion = req.getParameter("direccion");
+		String tipoGestion = req.getParameter("tipoGestion");
 		String estado = req.getParameter("estado");
 		String idPais = req.getParameter("idPais");
 		
@@ -104,6 +107,7 @@ public class CrudUniversidadServlet extends HttpServlet {
 		objUniversidad.setNombre(nombre);
 		objUniversidad.setSiglas(siglas);
 		objUniversidad.setDireccion(direccion);
+		objUniversidad.setTipoGestion(tipoGestion);
 		objUniversidad.setEstado(Integer.parseInt(estado)); // 1 = activo, 0 = inactivo	
 		objUniversidad.setPais(objPais);
 		
