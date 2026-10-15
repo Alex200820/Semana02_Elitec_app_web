@@ -13,4 +13,5 @@ public class Universidad {
 	private String direccion;
 	private int estado;
 	private Pais pais;
+	private String tipoGestion;
 }
