@@ -44,6 +44,7 @@
                             <th>Siglas</th>
                             <th>Dirección</th>
                             <th>País</th>
+                            <th>Gestión</th>
                             <th>Estado</th>
                             <th></th>
                             <th></th>
@@ -85,6 +86,16 @@
 	                        <label for="id_reg_direccion" class="col-md-3 col-form-label">Dirección</label>
 	                        <div class="col-md-9">
 	                            <input class="form-control" id="id_reg_direccion" name="direccion" placeholder="Ingrese la Dirección" type="text" maxlength="255">
+	                        </div>
+	                    </div>
+	                    <div class="row mb-3">
+	                        <label for="id_reg_gestion" class="col-md-3 col-form-label">Tipo de Gestión</label>
+	                        <div class="col-md-9">
+	                            <select class="form-select" id="id_reg_gestion" name="tipoGestion">
+	                                <option value="">[Seleccione]</option>
+	                                <option value="publica">Pública</option>
+	                                <option value="privada">Privada</option>
+	                            </select>
 	                        </div>
 	                    </div>
 	                    <div class="row mb-3">
@@ -138,6 +149,16 @@
 	                        </div>
 	                    </div>
 	                    <div class="row mb-3">
+	                        <label for="id_act_gestion" class="col-md-3 col-form-label">Tipo de Gestión</label>
+	                        <div class="col-md-9">
+	                            <select class="form-select" id="id_act_gestion" name="tipoGestion">
+	                                <option value="">[Seleccione]</option>
+	                                <option value="publica">Pública</option>
+	                                <option value="privada">Privada</option>
+	                            </select>
+	                        </div>
+	                    </div>
+	                    <div class="row mb-3">
 	                        <label for="id_act_pais" class="col-md-3 col-form-label">País</label>
 	                        <div class="col-md-9">
 	                            <select class="form-select" id="id_act_pais" name="idPais">
@@ -167,7 +188,6 @@
 
 	<script type="text/javascript">
 		$(document).ready(function () {
-			// Cargar combo de Países (Asegúrate de ajustar el URL del servlet de países si difiere)
 			$.ajax({
 				url: 'cargaComboPaisAlias', 
 				type: 'GET',
@@ -223,6 +243,7 @@
 						{data: "siglas", className:'text-center'},
 						{data: "direccion", className:'text-center'},
 						{data: "pais.nombre", className:'text-center'},
+						{data: "tipoGestion", className:'text-center'},
 						{data: function(row, type, val, meta){
 							return row.estado == 1 ? "Activo" : "Inactivo";  
 						}, className:'text-center'},
@@ -322,6 +343,7 @@
 		    $("#id_act_nombre").val(objGrilla.nombre);
 		    $("#id_act_siglas").val(objGrilla.siglas);
 		    $("#id_act_direccion").val(objGrilla.direccion);
+		    $("#id_act_gestion").val(objGrilla.tipoGestion);
 		    $("#id_act_estado").val(objGrilla.estado);
 		    $("#id_act_pais").val(objGrilla.pais.idPais);
 		    
