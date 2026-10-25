@@ -146,7 +146,7 @@
 		                            <select class="form-select" id="id_act_estado" name="estado">
 		                                <option value="">[Seleccione]</option>
 		                                <option value="1">Activo</option>
-		                                <option value="0">Inactivo</option>
+		                                <option value="0">Inactivo</option> 
 		                            </select>
 		                        </div>
 		                    </div>
