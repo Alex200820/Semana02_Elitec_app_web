@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<head>
 	<meta charset="UTF-8">
 	<title>Registro Libro Elitec</title>
 	<script src="js/bootstrap.js" type="text/javascript"></script>
