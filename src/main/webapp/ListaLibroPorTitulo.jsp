@@ -54,71 +54,143 @@
 
 <script type="text/javascript">
 
+
 $("#btnBuscar").click(function (e) {
-	
-	var varTitulo = $("#titulo").val();
-	console.log(">>> titulo: " , varTitulo);
-	
-	$.ajax({
-		url: "listaLibroPorTitulo",
-		type: "GET",
-		data: {titulo: varTitulo},
-		success: function (response) {
-			console.log(">>> response: " , response);
-			agregarGrilla(response);
-		},
-		error: function () {
-			alert("Error al buscar libros por título.");
-		}
-	});
-	
+
+    var varTitulo = $("#titulo").val().trim();
+
+    console.log(">>> titulo: ", varTitulo);
+
+    $.ajax({
+
+        url: "listaLibroPorTitulo",
+        type: "GET",
+        data: { titulo: varTitulo },
+
+        success: function (response) {
+
+            console.log(">>> response: ", response);
+
+            agregarGrilla(response);
+
+        },
+
+        error: function (xhr, status, error) {
+
+            console.error("Error: ", error);
+
+            alert("Error al buscar libros por título.");
+
+        }
+
+    });
+
 });
 
 
-function agregarGrilla(lista){
-	 $('#id_table').DataTable().clear();
-	 $('#id_table').DataTable().destroy();
-	 $('#id_table').DataTable({
-			data: lista,
-			language: IDIOMA,
-			searching: true,
-			ordering: true,
-			processing: true,
-			pageLength: 10,
-			lengthChange: true,
-			info:true,
-			scrollY: 305,
-	        scroller: {
-	            loadingIndicator: true
-	        },
-			columns:[
-				{data: "idLibro",className:'text-center'},
-				{data: "registro",className:'text-center'},
-				{data: "titulo",className:'text-center'},
-				{data: "pais", className:'text-center'},
-				{data: "autor", className:'text-center'},
-				{data: function(row, type, val, meta){
-					return row.fechaCreacion.day + "/" + row.fechaCreacion.month + "/" + row.fechaCreacion.year;  
-				},className:'text-center'},
-			]                                     
-	    });
+function agregarGrilla(lista) {
+
+    if ($.fn.DataTable.isDataTable('#id_table')) {
+        $('#id_table').DataTable().destroy();
+    }
+
+    $('#id_table').DataTable({
+
+        data: lista,
+
+        language: IDIOMA,
+
+        searching: true,
+        ordering: true,
+        processing: true,
+
+        pageLength: 10,
+        lengthChange: true,
+        info: true,
+
+        scrollY: 305,
+
+        columns: [
+
+            {
+                data: "idLibro",
+                className: 'text-center'
+            },
+
+            {
+                data: "registro",
+                className: 'text-center'
+            },
+
+            {
+                data: "titulo",
+                className: 'text-center'
+            },
+
+            {
+                data: "pais",
+                className: 'text-center'
+            },
+
+            {
+                data: "autor",
+                className: 'text-center'
+            },
+
+            {
+                data: function (row, type, val, meta) {
+
+                    if (!row.fechaCreacion) {
+                        return "";
+                    }
+
+                    return String(row.fechaCreacion.day).padStart(2, '0') + "/" +
+                           String(row.fechaCreacion.month).padStart(2, '0') + "/" +
+                           row.fechaCreacion.year;
+
+                },
+
+                className: 'text-center'
+
+            }
+
+        ]
+
+    });
+
 }
 
-	var IDIOMA = {
-		processing:"procesando...",
-	    lengthMenu: "_MENU_ Registros por p&aacute;gina",
-	    zeroRecords: "No existen registros",
-	    info: "P&aacute;gina _PAGE_ de _PAGES_",
-	    infoEmpty: "Sin registros",
-	    infoFiltered: "(Filtro de _MAX_ registros)",
-	    search: "Buscar:",
-	    paginate: {
-	        "first":      "Primero",
-	        "last":       "Last",
-	        "next":       "Siguiente",
-	        "previous":   "Anterior"
-	    }
-	};
+
+var IDIOMA = {
+
+    processing: "Procesando...",
+
+    lengthMenu: "_MENU_ Registros por página",
+
+    zeroRecords: "No existen registros",
+
+    info: "Página _PAGE_ de _PAGES_",
+
+    infoEmpty: "Sin registros",
+
+    infoFiltered: "(Filtro de _MAX_ registros)",
+
+    search: "Buscar:",
+
+    paginate: {
+
+        first: "Primero",
+
+        last: "Último",
+
+        next: "Siguiente",
+
+        previous: "Anterior"
+
+    }
+
+};
+
 	
 </script>
 </html>
